@@ -16,13 +16,13 @@ function lunchCheckerAppController($scope){
 
 		$scope.arrList = $scope.itemList.split(",");
 		$scope.count = $scope.arrList.length;
-
-		if($scope.count<4){
+		if($scope.count==1){
+			$scope.showStatus = "Please enter data first";
+		}else if($scope.count<4 && $scope.count>0){
 			$scope.showStatus = "Enjoy!";
-		}
-		else{
+		}else{
 			$scope.showStatus = "Too much!";
-		}
+		} 
 
 	}
 
