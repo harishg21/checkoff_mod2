@@ -4,7 +4,12 @@
 
 angular.module("lunchCheckerApp",[])
 
-.controller("lunchCheckerAppController", function($scope){
+.controller("lunchCheckerAppController", lunchCheckerAppController);
+
+
+lunchCheckerAppController.$inject = ['$scope'];
+
+function lunchCheckerAppController($scope){
 
 	$scope.itemList = "";
 	$scope.checkerFunc = function(){
@@ -22,6 +27,6 @@ angular.module("lunchCheckerApp",[])
 	}
 
 
-})
+}
 	
 })()
