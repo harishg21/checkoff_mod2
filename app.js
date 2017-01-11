@@ -2,31 +2,83 @@
 
 "use strict";
 
-angular.module("lunchCheckerApp",[])
+angular.module("checkOffShoppingList",[])
 
-.controller("lunchCheckerAppController", lunchCheckerAppController);
+.controller("toBuyController",toBuyController)
+.controller("alreadyBoughtController",alreadyBoughtController)
+.service("ShoppingListCheckOffService",ShoppingListCheckOffService)
+
+toBuyController.$inject = ['ShoppingListCheckOffService'];
+function toBuyController(ShoppingListCheckOffService){
+    var list1 = this;
 
 
-lunchCheckerAppController.$inject = ['$scope'];
+    list1.buyItemList = ShoppingListCheckOffService.getBuyItemList();
 
-function lunchCheckerAppController($scope){
 
-	$scope.itemList = "";
-	$scope.checkerFunc = function(){
+    
+    
+    list1.removeItem = function(itemIndex){
+    	ShoppingListCheckOffService.removeItem(itemIndex);
+    	
+    }
 
-		$scope.arrList = $scope.itemList.split(",");
-		$scope.count = $scope.arrList.length;
-		if($scope.count==1){
-			$scope.showStatus = "Please enter data first";
-		}else if($scope.count<4 && $scope.count>0){
-			$scope.showStatus = "Enjoy!";
-		}else{
-			$scope.showStatus = "Too much!";
-		} 
 
+}
+
+alreadyBoughtController.$inject = ['ShoppingListCheckOffService']
+
+function alreadyBoughtController(ShoppingListCheckOffService){
+	var list2 = this;
+
+	list2.boughtItemList = ShoppingListCheckOffService.getBoughtItemList()
+
+}
+
+
+
+function ShoppingListCheckOffService(){
+	var service = this;
+
+	var buyItemList = [{name:"cookie", quantity:5}, {name:"apple", quantity:3}, {name:"orange", quantity:3},
+				{name:"guava", quantity:3},{name:"chocolate", quantity:3}]
+
+	var boughtItemList = [];
+
+	var buyListStatus = false;
+
+	service.removeItem = function(itemIndex){
+		var toberemoved = buyItemList[itemIndex]
+		console.log("toberemoved: ",toberemoved)
+		boughtItemList.push(toberemoved)
+		console.log("boughtItemList",boughtItemList)
+		buyItemList.splice(itemIndex,1)
+		
+		service.getBuyItemListStatus = function(){
+		if(buyItemList.length==0){
+			buyListStatus = true;
+		}
+		console.log("buyListStatus",buyListStatus)
+		return buyListStatus; 
+		}
+		
+	}
+
+	
+
+	service.getBuyItemList = function(){
+		console.log(buyItemList)
+		return buyItemList;
+	}
+
+	service.getBoughtItemList = function(){
+		console.log("boughtItemList: ",boughtItemList)
+		return boughtItemList;
 	}
 
 
 }
-	
+
+
+
 })()
