@@ -1,19 +1,46 @@
-<!DOCTYPE html>
-<html ng-app="lunchCheckerApp">
+<!doctype html>
+<html lang="en" ng-app="checkOffShoppingList">
   <head>
-    <meta charset="utf-8">
+    <title>Shopping List Check Off</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
     <script src="angular.min.js"></script>
-    
     <script src="app.js"></script>
-    <title>Lunch Checker</title>
+    
   </head>
-  <body ng-controller="lunchCheckerAppController">
-  		<center><h1>Lunch Checker</h1>
-  		<input type="text" ng-model="itemList" placeholder="list comma separated dishes you usually have for lunch"><br><br>
-  		
-  		<button type="button" ng-click="checkerFunc()">Check If Too Much</button><br><br>
+<body>
 
-  		<p>{{showStatus}}</p>
-  		</center>
-  </body>
+<div class="container"> 
+<h1>Shopping List Check Off</h1>
+  <div class="row">
+    <div class="col-md-5">
+      <div ng-controller="toBuyController as list1">
+        <h3>To Buy</h3>
+        <div class="alert alert-success" ng-if="list1.buyItemList==0"><h4>Everything is bought!</h4></div>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="item in list1.buyItemList">Buy {{item.quantity}} {{item.name}}   
+          <button class="btn btn-primary" style=""ng-click="list1.removeItem($index)">Bought</button>
+          </li>
+        </ul>
+      
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div ng-controller="alreadyBoughtController as list2">
+        <h3>Already Bought</h3>
+        <div class="alert alert-warning" ng-if="list2.boughtItemList==0"><h4>Nothing bought yet!</h4></div>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="item in list2.boughtItemList">Bought {{item.quantity}} {{item.name}}</li>
+        </ul>
+      
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+</body>
 </html>
